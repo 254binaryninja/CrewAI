@@ -1,0 +1,3 @@
+crewai
+langachain_google_genai
+load_dotenv
