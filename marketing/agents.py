@@ -2,7 +2,7 @@ from crewai import Agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 import os
-from tools import search_tool
+from tools import search_tool,yt_tool
 
 load_dotenv()
 
@@ -38,10 +38,10 @@ content_creator=Agent(
   backstory=(
       "You are a renonwed Kenyan content creator with over 5 years of experience ,"
       "you are driven by desire to improve business by creating content that they can post ,"
-      "on their various social media platforms."
+      "on their various social media platforms and analyzing various youtube videos for inspiration."
   ),
   llm=llm,
   verbose=True,
   allow_delegation=True,
-  tools=[search_tool],
+  tools=[search_tool,yt_tool],
 )

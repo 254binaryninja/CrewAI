@@ -5,44 +5,46 @@ from dotenv import load_dotenv
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 load_dotenv()
-## Call the gemini models
 
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash",
                              verbose=True,
                              temperature=0.5,
                              google_api_key=os.getenv("GOOGLE_API_KEY"))
 
-
-# Creating a senior research agent with verbose and memory
-
-news_researcher = Agent(
-    role="Senior Researcher",
-    goal='Uncover ground breaking technologies in {topic}',
+software_tool_researcher = Agent(
+    role="Software Tool Researcher",
+    goal='Uncover and analyze cutting-edge tools for {software_project_type}',
     backstory=(
-        "Driven by curiosity, you are at the forefront of,"
-        "innovation, eager to explore and share knowledge that could change ,"
-        "the world . "
+        "As a seasoned software engineer with a passion for efficiency, "
+        "you're always on the lookout for the best tools to streamline "
+        "development processes and boost productivity."
     ),
     llm=llm,
     verbose=True,
     memory=True,
+    max_retry_limit=25,
+    max_iter=None,
+    max_execution_time=None,
+    max_rpm=15,
     tools=[search_tool],
     allow_delegation=True
 )
 
-#Creating a writer agent that will be responsible in writing news blog
-
-news_writer=Agent(
-   role="Writer",
-   goal="Narrate compelling tech stories about {topic}",
-   backstory=(
-       "With a flair for simplifying complex topics , you craft"
-       "engaging narratives that captivate and educate bringing new,"
-       "discoveries to life in an accessible manner."
-   ),
+software_tool_content_creator = Agent(
+    role="Software Tool Content Creator",
+    goal="Create compelling content about top tools for {software_project_type}",
+    backstory=(
+        "With a knack for explaining complex technical concepts in simple terms, "
+        "you craft engaging content that helps developers and project managers "
+        "make informed decisions about the tools they use."
+    ),
     llm=llm,
     verbose=True,
     memory=True,
+    max_retry_limit=25,
+    max_iter=None,
+    max_execution_time=None,
+    max_rpm=15,
     tools=[search_tool],
     allow_delegation=False
 )
